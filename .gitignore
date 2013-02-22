@@ -1,0 +1,18 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.bak
+
+*.iml
+.idea
+target
+
+temp
+data
+src/main/resources/ml-100k
+
+*.iml
+.DS_Store
