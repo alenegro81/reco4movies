@@ -6,7 +6,7 @@ import org.reco4j.graph.recommenders.IRecommender;
 import org.reco4j.graph.recommenders.RecommenderEvaluator;
 import org.reco4j.session.RecommenderSessionManager;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.Properties;
 
 public class Reco4JTestRecommender

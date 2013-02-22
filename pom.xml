@@ -17,6 +17,20 @@
             <version>1.8.1</version>
         </dependency>
 
+        <!-- Neo4j Server -->
+        <dependency>
+            <groupId>org.neo4j.app</groupId>
+            <artifactId>neo4j-server</artifactId>
+            <version>1.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.neo4j.app</groupId>
+            <artifactId>neo4j-server</artifactId>
+            <classifier>static-web</classifier>
+            <version>1.8</version>
+        </dependency>
+
         <!-- Reco4j -->
         <dependency>
             <groupId>org.reco4j</groupId>
