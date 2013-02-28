@@ -2,10 +2,8 @@ import org.apache.log4j.Logger;
 import org.reco4j.graph.INode;
 import org.reco4j.graph.Rating;
 import org.reco4j.graph.engine.RecommenderEngine;
-import org.reco4j.graph.neo4j.Neo4jGraph;
 import org.reco4j.graph.neo4j.engine.RecommenderNeo4jEngine;
 import org.reco4j.graph.recommenders.IRecommender;
-import org.reco4j.session.RecommenderSessionManager;
 import org.reco4j.util.RecommenderPropertiesHandle;
 
 import java.io.IOException;
@@ -15,10 +13,9 @@ public class Reco4JTestRecommender
 {
     private static Logger logger = Logger.getLogger(Reco4JTestRecommender.class);
 
-    public Neo4jGraph learningDataSet;
-    public Neo4jGraph testingDataSet;
-
     public static void main(String[] args) {
+
+        logger.info("START");
 
         Properties properties = loadProperties();
 
@@ -29,8 +26,6 @@ public class Reco4JTestRecommender
         RecommenderEngine.evaluateRecommender(reco.testingDataSet, recommender);
         */
 
-        logger.info("START");
-
         RecommenderNeo4jEngine reco = new RecommenderNeo4jEngine();
         reco.setUP(properties);
 
@@ -40,6 +35,7 @@ public class Reco4JTestRecommender
         /*
         recommender.buildRecommender(reco.getLearningDataSet());
         */
+
         //IRecommender recommender = RecommenderEngine.buildRecommender(reco.getLearningDataSet(), properties);
         //IRecommender recommender = RecommenderEngine.loadRecommender(reco.getLearningDataSet(), properties);
         //RecommenderPropertiesHandle.getInstance().setProperties(properties);
@@ -52,7 +48,7 @@ public class Reco4JTestRecommender
         {
             String userId = user.getProperty(RecommenderPropertiesHandle.getInstance().getUserIdentifierName());
 
-            if (userId.equalsIgnoreCase("12"))
+            if (userId.equalsIgnoreCase("15"))
                 for (Rating rating : recommender.recommend(user))
                 {
                     logger.info("Item 12: Item: " + rating.getItem().getProperty("title") + " rating: " + rating.getRate());
@@ -60,33 +56,14 @@ public class Reco4JTestRecommender
 
         }
 
-        /*
+        /* not jet implemented
         Node justOneNode = reco.getLearningDataSet().getGraphDB().getNodeById(12);
         for (Rating rating : recommender.recommend(new BasicNode(justOneNode))) {
             logger.info("Item 12: Item: " + rating.getItem().getProperty("title") + " rating: " + rating.getRate());
         }
         */
-    }
 
-    public void setUP(Properties properties)
-    {
-        /*
-        InternalAbstractGraphDatabase graphdb = new EmbeddedGraphDatabase("./data/movielens.db");
-
-        WrappingNeoServerBootstrapper srv = new WrappingNeoServerBootstrapper( graphdb );
-        srv.start();
-        */
-
-        learningDataSet = new Neo4jGraph();
-        learningDataSet.setProperties(properties);
-        learningDataSet.initDatabase();
-        RecommenderSessionManager.getInstance().setLearningDataSet(learningDataSet);
-
-        testingDataSet = new Neo4jGraph();
-        testingDataSet.setProperties(properties);
-        testingDataSet.setDatabase(learningDataSet.getGraphDB());
-        testingDataSet.setIsTest(true);
-        RecommenderSessionManager.getInstance().setTestingDataSet(testingDataSet);
+        logger.info("END");
     }
 
     public static Properties loadProperties()
